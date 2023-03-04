@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // now we have to define the routes for this product for this puropse 
-router.route("/").get(getAllProducts)
+router.route("/products").get(getAllProducts)
 
 
 module.exports = router
