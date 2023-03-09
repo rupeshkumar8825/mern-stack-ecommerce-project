@@ -90,5 +90,28 @@ exports.deleteProduct = async(req, res, next) => {
     })
 }
 
-// finally adding some comments for learning purpose to demonstrate the multiple branch 
-// how to handle the multiple  branch in the git locally for learning purpose and for this purpose 
+
+// function to get the product details 
+exports.getProductDetails = async(req, res)=>{
+    console.log("user wants to know the details of the product for this purpose");
+    currentProductId = req.params.id;
+    currentProduct = await Product.findById(currentProductId);
+
+    // applying if else condition for validating for this purpose 
+    if(!currentProduct)
+    {
+        res.status(500).json({
+            success : false,
+            message : "Product Does Not Exists"
+        })
+    }
+
+
+    // otherwise we have to return this product details for this purpose 
+    // say everything went fine 
+    res.status(200).json({
+        success : true, 
+        product : currentProduct
+    })
+
+}
