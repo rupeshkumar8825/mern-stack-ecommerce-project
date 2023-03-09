@@ -54,3 +54,26 @@ exports.updateProduct = async(req, res, next) => {
     res.status(200).json({message : "Successfully Updated the product for this purpose", product : currentProduct});
 
 }
+
+// route to delete the product --admin 
+exports.deleteProduct = async(req, res, next) => {
+    const currentId = req.params.id  
+    const currentProduct = Product.findById(currentId);
+
+    if(!currentProduct)
+    {
+        res.status(500).json({
+            success : false,
+            message : "Product Not Found"
+        })
+    }
+
+    // otherwise we have to do the following for this purpose 
+    await Product.findByIdAndDelete(currentId);
+
+    // say everything went fine 
+    res.status(200).json({
+        success : true, 
+        message : "Product Deleted Successfully"
+    })
+}
