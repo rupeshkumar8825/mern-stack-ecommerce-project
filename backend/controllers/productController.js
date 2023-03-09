@@ -16,7 +16,8 @@ exports.createProduct = async (req, res, next) => {
 }
 
 // this is what we follow the design pattern to not to over write the code in a single file 
-exports.getAllProducts = (req, res) =>{
+exports.getAllProducts = async (req, res) =>{
+    const products = await Product.find()
     // say everything went fine 
-    res.status(200).json({message : "Route is working fine"})
+    res.status(200).json({message : "Route is working fine", products: products})
 }
