@@ -1,6 +1,8 @@
 // this is function file where we will implement all the api functions for this purpose 
 const Product = require("../models/productModel")
 
+
+
 // we have to define the function to create the product for this purpose 
 // we have to use the async and await for this purpose
 // this will be admin route to create the new product for this purpose 
@@ -16,12 +18,19 @@ exports.createProduct = async (req, res, next) => {
 
 }
 
+
+
+
 // this is what we follow the design pattern to not to over write the code in a single file 
 exports.getAllProducts = async (req, res, next) =>{
     const products = await Product.find()
     // say everything went fine 
     res.status(200).json({message : "Route is working fine", products: products})
 }
+
+
+
+
 
 // function to update the product for this purpose 
 // this will be admin route 
@@ -55,6 +64,9 @@ exports.updateProduct = async(req, res, next) => {
 
 }
 
+
+
+
 // route to delete the product --admin 
 exports.deleteProduct = async(req, res, next) => {
     const currentId = req.params.id  
@@ -77,3 +89,6 @@ exports.deleteProduct = async(req, res, next) => {
         message : "Product Deleted Successfully"
     })
 }
+
+// finally adding some comments for learning purpose to demonstrate the multiple branch 
+// how to handle the multiple  branch in the git locally for learning purpose and for this purpose 
