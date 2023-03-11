@@ -14,9 +14,11 @@ const connectDatabase = ()=>{
         useNewUrlParser : true, useUnifiedTopology : true
     }).then((data) => {
         console.log(`MongoDB connected with the server with ${data.connection.host}`)
-    }).catch((error) => {
-        console.log(error)
     })
+    // no need of catch block here because we already have hanlded the unhandled promise rejection in server.js
+    // .catch((error) => {
+    //     console.log(error)
+    // })
 }
 
 // say everything went fine 

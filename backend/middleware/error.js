@@ -11,6 +11,13 @@ module.exports = (err, req, res, next)=>{
     err.message = err.message || "Internal server error "
 
     
+    // wrong mondodb error handling 
+    if(err.name === "CastError"){
+        const message = `Resource Not found. Invalid: ${err.path}`;
+        err = new ErrorHandler(message, 400)
+    }
+
+
     // say everything went fine 
     res.status(err.statusCode).json(
         {
