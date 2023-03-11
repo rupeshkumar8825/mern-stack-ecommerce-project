@@ -1,5 +1,6 @@
 // this is function file where we will implement all the api functions for this purpose 
-const Product = require("../models/productModel")
+const Product = require("../models/productModel");
+const ErrorHandler = require("../utils/errorHandler");
 
 
 
@@ -41,12 +42,16 @@ exports.updateProduct = async(req, res, next) => {
     let currentProduct = await Product.findById(currentId);
 
     // if product is not found 
+    // if(!currentProduct)
+    // {
+    //     return res.status(500).json({
+    //         success : false,
+    //         message : "Product not found for this purpose"
+    //     })
+    // }
     if(!currentProduct)
     {
-        return res.status(500).json({
-            success : false,
-            message : "Product not found for this purpose"
-        })
+        return next(new ErrorHandler("Product not found", 500))
     }
 
     // otherwise we have to update this product 
@@ -72,13 +77,19 @@ exports.deleteProduct = async(req, res, next) => {
     const currentId = req.params.id  
     const currentProduct = Product.findById(currentId);
 
+    // if(!currentProduct)
+    // {
+    //     res.status(500).json({
+    //         success : false,
+    //         message : "Product Not Found"
+    //     })
+    // }
+
     if(!currentProduct)
     {
-        res.status(500).json({
-            success : false,
-            message : "Product Not Found"
-        })
+        return next(new ErrorHandler("Product not found", 500))
     }
+
 
     // otherwise we have to do the following for this purpose 
     await Product.findByIdAndDelete(currentId);
@@ -98,12 +109,17 @@ exports.getProductDetails = async(req, res)=>{
     currentProduct = await Product.findById(currentProductId);
 
     // applying if else condition for validating for this purpose 
+    // if(!currentProduct)
+    // {
+    //     res.status(500).json({
+    //         success : false,
+    //         message : "Product Does Not Exists"
+    //     })
+    // }
+
     if(!currentProduct)
     {
-        res.status(500).json({
-            success : false,
-            message : "Product Does Not Exists"
-        })
+        return next(new ErrorHandler("Product not found", 500))
     }
 
 
