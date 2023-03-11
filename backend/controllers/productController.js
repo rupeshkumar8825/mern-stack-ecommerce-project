@@ -1,13 +1,13 @@
 // this is function file where we will implement all the api functions for this purpose 
 const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorHandler");
-
+const catchAsyncErrors = require("../middleware/catchAsyncErrors")
 
 
 // we have to define the function to create the product for this purpose 
 // we have to use the async and await for this purpose
 // this will be admin route to create the new product for this purpose 
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     console.log("hi i am creating the product for this purpose");
     const product = await Product.create(req.body)
 
@@ -17,25 +17,25 @@ exports.createProduct = async (req, res, next) => {
         product 
     })
 
-}
+})
 
 
 
 
 // this is what we follow the design pattern to not to over write the code in a single file 
-exports.getAllProducts = async (req, res, next) =>{
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) =>{
     const products = await Product.find()
     // say everything went fine 
     res.status(200).json({message : "Route is working fine", products: products})
 }
-
+)
 
 
 
 
 // function to update the product for this purpose 
 // this will be admin route 
-exports.updateProduct = async(req, res, next) => {
+exports.updateProduct = catchAsyncErrors(async(req, res, next) => {
     console.log("The user is updating the product details for this purpose \n");
 
     const currentId = req.params.id;
@@ -68,12 +68,12 @@ exports.updateProduct = async(req, res, next) => {
     res.status(200).json({message : "Successfully Updated the product for this purpose", product : currentProduct});
 
 }
-
+)
 
 
 
 // route to delete the product --admin 
-exports.deleteProduct = async(req, res, next) => {
+exports.deleteProduct = catchAsyncErrors(async(req, res, next) => {
     const currentId = req.params.id  
     const currentProduct = Product.findById(currentId);
 
@@ -100,10 +100,10 @@ exports.deleteProduct = async(req, res, next) => {
         message : "Product Deleted Successfully"
     })
 }
-
+)
 
 // function to get the product details 
-exports.getProductDetails = async(req, res)=>{
+exports.getProductDetails = catchAsyncErrors(async(req, res)=>{
     console.log("user wants to know the details of the product for this purpose");
     currentProductId = req.params.id;
     currentProduct = await Product.findById(currentProductId);
@@ -130,4 +130,4 @@ exports.getProductDetails = async(req, res)=>{
         product : currentProduct
     })
 
-}
+})
